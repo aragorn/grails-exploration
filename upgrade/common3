@@ -35,6 +35,7 @@ function copy_files()
 	done < <( find $FROM -name *.groovy )
 }
 
+cd ..
 copy_files 'common/src/groovy' 'common3/src/main/groovy'
 
 # vim: set ts=4 noexpandtab :

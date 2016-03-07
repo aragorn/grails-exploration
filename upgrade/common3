@@ -58,7 +58,7 @@ function copy_files()
 			# --ignore-space-change suppresses 'No newline at end of file'.
 			diff --ignore-space-change "${FILENAME}" "${TO}/${PACKAGE}/${BASENAME}" || :
 		fi
-	done < <( find $FROM -name *.groovy )
+	done < <( find $FROM -name *.groovy -or -name *.java )
 }
 
 cd ..

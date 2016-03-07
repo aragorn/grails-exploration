@@ -77,6 +77,9 @@ dependencies {
     // https://repo.grails.org/grails/core/org/grails/grails-datastore-rest-client/
 
     compile "com.kakao.buy:voucher-core:0.4-SNAPSHOT"
+    //compile "com.kakao.iceland:iceland-papi-client:1.21.0"
+    compile "com.kakao.iceland:iceland-papi-client:1.33.1"
+    compile "com.kakao.account:kakao-account-client:1.0.5"
 }
 
 task wrapper(type: Wrapper) {

@@ -29,8 +29,27 @@ function copy_files()
 		then
 			: # Files are identical. Do nothing.
 		else
-			echo "install -p \"${FILENAME}\" \"${TO}/${PACKAGE}\""
-			install -p -C "${FILENAME}" "${TO}/${PACKAGE}"
+			if diff --ignore-space-change "${FILENAME}" "${TO}/${PACKAGE}/${BASENAME}"
+			then
+				: # Files are effectively identical. Do nothing.
+			else
+				echo "install -p \"${FILENAME}\" \"${TO}/${PACKAGE}\""
+				install -p -C "${FILENAME}" "${TO}/${PACKAGE}"
+			fi
+		fi
+
+		# http://grails.github.io/grails-doc/3.1.x/guide/upgrading.html#upgradingApps
+		# Step 4 - Modify Package Imports
+		sed -i '' -f 'upgrade/grails_package.sed' "${TO}/${PACKAGE}/${BASENAME}"
+
+
+		if cmp --silent "${FILENAME}" "${TO}/${PACKAGE}/${BASENAME}"
+		then
+			# sed 가 모든 파일의 수정시각을 갱신한다. 원본 파일의 시각으로 다시 되돌린다.
+			touch -f -m -a -r "${FILENAME}" "${TO}/${PACKAGE}/${BASENAME}"
+		else
+			# --ignore-space-change suppresses 'No newline at end of file'.
+			diff --ignore-space-change "${FILENAME}" "${TO}/${PACKAGE}/${BASENAME}" || :
 		fi
 	done < <( find $FROM -name *.groovy )
 }

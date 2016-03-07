@@ -18,7 +18,12 @@ build/
 */improx-resources/
 
 # temporary rules while upgrading to grails3
-common3/grails-app/
+common3/grails-app/controllers
+common3/grails-app/domain
+common3/grails-app/services
+common3/grails-app/taglib
+common3/grails-app/utils
+common3/grails-app/views
 common3/src/main/groovy/
 common3/src/integration-test/groovy/
 

@@ -85,6 +85,9 @@ dependencies {
 
     // FIXME unable to resolve class grails.plugins.rest.client.ErrorResponse
 //    compile "org.grails.plugins:rest-client-builder:1.0.3@zip"
+
+    compile 'org.mybatis:mybatis:3.3.1' // Core MyBatis library
+    compile 'org.mybatis:mybatis-spring:1.2.4' // Support for Spring IoC</code>
 }
 
 task wrapper(type: Wrapper) {

@@ -36,6 +36,17 @@ function copy_files()
 }
 
 cd ..
+#copy_files 'common/grails-app/assets' 'common3/grails-app/assets'
+#copy_files 'common/grails-app/conf' 'common3/grails-app/conf'
+copy_files 'common/grails-app/controllers' 'common3/grails-app/controllers'
+copy_files 'common/grails-app/domain' 'common3/grails-app/domain'
+#copy_files 'common/grails-app/i18n' 'common3/grails-app/i18n'
+copy_files 'common/grails-app/services' 'common3/grails-app/services'
+copy_files 'common/grails-app/taglib' 'common3/grails-app/taglib'
+copy_files 'common/grails-app/utils' 'common3/grails-app/utils'
+copy_files 'common/grails-app/views' 'common3/grails-app/views'
 copy_files 'common/src/groovy' 'common3/src/main/groovy'
+copy_files 'common/test/integration' 'common3/src/integration-test/groovy'
+
 
 # vim: set ts=4 noexpandtab :

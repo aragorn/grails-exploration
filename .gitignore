@@ -1,0 +1,84 @@
+## default .gitignore for grails 3 ################
+Thumbs.db
+.DS_Store
+.gradle
+build/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+
+# added by jk
+*/.asscache
+*/*.swp
+*.swp
+*/improx-resources/
+
+# temporary rules while upgrading to grails3
+common3/grails-app/
+common3/src/main/groovy/
+common3/src/integration-test/groovy/
+
+## older .gitignore organized by hand #############
+# .gitignore for Grails
+**/LocalConfig.groovy
+
+# IDE support files
+.launch
+.slcache
+*.launch
+*.tmproj
+ivy*
+eclipse
+.Idea
+*/projectFilesBackup
+#*/.groovy
+.metadata
+
+# default HSQL database files for production mode
+# prodDb.*
+
+# general HSQL database files
+# *Db.properties
+# *Db.script
+
+# logs
+stacktrace.log
+coverage*.log
+test/reports
+logs
+
+# project release file
+**/*.war
+
+# plugin release file
+*.zip
+
+# older plugin install locations
+*/web-app/plugins
+*/web-app/WEB-INF/classes
+*/web-app/WEB-INF/tld
+
+# "temporary" build files
+target
+
+#Compiled Class
+out
+*/class
+
+#etc
+/Servers
+#sub git ignore
+*/*/.gitignore
+
+Servers
+
+#plugins relative files
+plugin.xml
+*/*/*.sha1
+*/*/*.zip
+atlassian-ide-plugin.xml
+target.job/

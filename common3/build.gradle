@@ -88,6 +88,8 @@ dependencies {
 
     compile 'org.mybatis:mybatis:3.3.1' // Core MyBatis library
     compile 'org.mybatis:mybatis-spring:1.2.4' // Support for Spring IoC</code>
+
+    compile 'mysql:mysql-connector-java:5.1.38'
 }
 
 task wrapper(type: Wrapper) {

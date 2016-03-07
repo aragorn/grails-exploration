@@ -28,6 +28,11 @@ ext {
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+
+    maven { url 'http://artifactory.iwilab.com:8088/artifactory/libs-snapshot-local/' }
+    maven { url 'http://artifactory.iwilab.com:8088/artifactory/libs-release-local/' }
+    maven { url 'http://maven.daumcorp.com/content/repositories/kakao-KakaoBuy-release/' }
+    maven { url 'http://maven.daumcorp.com/content/repositories/kakao-KakaoBuy-snapshots/' }
 }
 
 dependencyManagement {
@@ -71,6 +76,7 @@ dependencies {
     compile "org.grails:grails-datastore-rest-client:5.0.2.RELEASE"
     // https://repo.grails.org/grails/core/org/grails/grails-datastore-rest-client/
 
+    compile "com.kakao.buy:voucher-core:0.4-SNAPSHOT"
 }
 
 task wrapper(type: Wrapper) {

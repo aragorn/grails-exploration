@@ -24,6 +24,13 @@ function copy_files()
 		PACKAGE=${DIRNAME#$FROM}
 		PACKAGE=${PACKAGE#/}
 
+		if grep "${FILENAME}" 'upgrade/excluded'
+		then
+			echo "Skipped ${FILENAME}"
+			rm -f "${TO}/${PACKAGE}/${BASENAME}"
+			break
+		fi
+
 		[ -d "${TO}/${PACKAGE}" ] || install -d "${TO}/${PACKAGE}"
 		if cmp --silent "${FILENAME}" "${TO}/${PACKAGE}/${BASENAME}"
 		then

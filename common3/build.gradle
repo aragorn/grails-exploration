@@ -29,6 +29,8 @@ repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
 
+    maven { url "https://repo.grails.org/grails/repo" } // for 2.4.4 plugins ??
+
     maven { url 'http://artifactory.iwilab.com:8088/artifactory/libs-snapshot-local/' }
     maven { url 'http://artifactory.iwilab.com:8088/artifactory/libs-release-local/' }
     maven { url 'http://maven.daumcorp.com/content/repositories/kakao-KakaoBuy-release/' }
@@ -80,6 +82,9 @@ dependencies {
     //compile "com.kakao.iceland:iceland-papi-client:1.21.0"
     compile "com.kakao.iceland:iceland-papi-client:1.33.1"
     compile "com.kakao.account:kakao-account-client:1.0.5"
+
+    // FIXME unable to resolve class grails.plugins.rest.client.ErrorResponse
+//    compile "org.grails.plugins:rest-client-builder:1.0.3@zip"
 }
 
 task wrapper(type: Wrapper) {

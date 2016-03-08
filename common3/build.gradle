@@ -29,8 +29,6 @@ repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
 
-    maven { url "https://repo.grails.org/grails/repo" } // for 2.4.4 plugins ??
-
     maven { url 'http://artifactory.iwilab.com:8088/artifactory/libs-snapshot-local/' }
     maven { url 'http://artifactory.iwilab.com:8088/artifactory/libs-release-local/' }
     maven { url 'http://maven.daumcorp.com/content/repositories/kakao-KakaoBuy-release/' }
@@ -63,40 +61,49 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
-    compile "org.grails.plugins:spring-security-core:3.0.3"
+    /* grails plugin repository - https://repo.grails.org/grails/core */
+
+    compile "org.grails.plugins:spring-security-core:3.0.3" // https://repo.grails.org/grails/core
+
 
     // http://grails.github.io/grails-data-mapping/latest/hibernate/manual/index.html
     compile "org.grails.plugins:hibernate5:5.0.2" // Current latest version
-    compile "org.hibernate:hibernate-core:5.0.3.Final"
-    compile "org.hibernate:hibernate-ehcache:5.0.3.Final"
+    compile "org.hibernate:hibernate-core:5.1.0.Final" // 5.0.3.Final -> 5.1.0.Final
+    compile "org.hibernate:hibernate-ehcache:5.1.0.Final" // 5.0.3.Final -> 5.1.0.Final
 
     // compile "org.grails.plugins:redis:1.6.6" // replaced by redis:2.0.4
-    compile "org.grails.plugins:redis:2.0.4"
-    // https://repo.grails.org/grails/core/org/grails/plugins/redis/
+    compile "org.grails.plugins:redis:2.0.4" // https://repo.grails.org/grails/core
 
     // compile "org.grails.plugins:rest-client-builder" // replaced by grails-datastore-rest-client
-    compile "org.grails:grails-datastore-rest-client:5.0.2.RELEASE"
-    // https://repo.grails.org/grails/core/org/grails/grails-datastore-rest-client/
+    compile "org.grails:grails-datastore-rest-client:5.0.2.RELEASE" // https://repo.grails.org/grails/core
 
-    compile "com.kakao.buy:voucher-core:0.4-SNAPSHOT"
-    //compile "com.kakao.iceland:iceland-papi-client:1.21.0"
-    compile "com.kakao.iceland:iceland-papi-client:1.33.1"
-    compile "com.kakao.account:kakao-account-client:1.0.5"
-
-    // com.kakao.talk.thrift.service.TNotFoundException
-    compile "com.kakao.talk:maldive-app-commons:1.3.9"
-    compile "com.kakao.kage:kage-client:1.0-SNAPSHOT"
 
     // FIXME unable to resolve class grails.plugins.rest.client.ErrorResponse
 //    compile "org.grails.plugins:rest-client-builder:1.0.3@zip"
 
-    compile 'org.mybatis:mybatis:3.3.1' // Core MyBatis library
-    compile 'org.mybatis:mybatis-spring:1.2.4' // Support for Spring IoC</code>
+    // Core MyBatis library
+    compile 'org.mybatis:mybatis:3.3.1' // https://repo.grails.org/grails/core
+    // Support for Spring IoC</code>
+    compile 'org.mybatis:mybatis-spring:1.2.4' // https://repo.grails.org/grails/core
 
     // MySQLSyntaxErrorException
-    compile 'mysql:mysql-connector-java:5.1.38'
+    compile "mysql:mysql-connector-java:5.1.38" // https://repo.grails.org/grails/core
 
-    compile 'commons-fileupload:commons-fileupload:1.3.1'
+    compile "commons-fileupload:commons-fileupload:1.3.1" // https://repo.grails.org/grails/core
+    compile "org.grails.plugins:browser-detection:3.1.0" // https://repo.grails.org/grails/core
+
+    /* http://artifactory.iwilab.com:8088/artifactory/libs-release-local/ */
+
+    compile "com.kakao.iceland:iceland-papi-client:1.33.1" // 1.21.0 -> 1.33.1
+    compile "com.kakao.account:kakao-account-client:1.0.5" // 0.3.26 -> 1.0.5
+
+    // com.kakao.talk.thrift.service.TNotFoundException
+    compile "com.kakao.talk:maldive_app_commons:1.3.47" // 1.3.9 -> 1.3.47
+
+    /* http://artifactory.iwilab.com:8088/artifactory/libs-snapshot-local/ */
+
+    compile "com.kakao.buy:voucher-core:0.4-SNAPSHOT"
+    compile "com.kakao.kage:kage-client:1.0-SNAPSHOT"
 }
 
 task wrapper(type: Wrapper) {

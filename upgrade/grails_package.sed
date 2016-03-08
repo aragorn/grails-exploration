@@ -37,9 +37,15 @@ s/import org\.codehaus\.groovy\.grails\.web\.servlet\./import grails.web.http./1
 # org.codehaus.groovy.grails.support.proxy.DefaultProxyHandler -> grails.core.support.proxy.DefaultProxyHandler
 s/import org\.codehaus\.groovy\.grails\.support\.proxy\./import grails.core.support.proxy./1
 
-# org.codehaus.groovy.grails.support.IncludeExcludeSupport -> # org.grails.core.util.IncludeExcludeSupport
+# org.codehaus.groovy.grails.support.IncludeExcludeSupport -> org.grails.core.util.IncludeExcludeSupport
 s/import org\.codehaus\.groovy\.grails\.support\.IncludeExcludeSupport/import org.grails.core.util.IncludeExcludeSupport/1
 
 s/import org\.codehaus\.groovy\.grails\./import grails./1
+
+# org.grails.databinding.errors.BindingError -> grails.databinding.errors.BindingError
+s/import org\.grails\.databinding\.errors\./import grails.databinding.errors./1
+
+# org.grails.databinding.events.DataBindingListener -> grails.databinding.events.DataBindingListener
+s/import org\.grails\.databinding\.events\./import grails.databinding.events./1
 
 # vim: set textwidth=120 :

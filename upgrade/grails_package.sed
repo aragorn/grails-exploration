@@ -1,8 +1,14 @@
-# org.codehaus.groovy.grails.commons.GrailsStringUtils -> grails.util.GrailsStringUtils
-s/import org\.codehaus\.groovy\.grails\.commons\.GrailsStringUtils/import grails.util.GrailsStringUtils/1
+# org.codehaus.groovy.grails.commons.ClassPropertyFetcher -> org.grails.core.util.ClassPropertyFetcher
+s/import org\.codehaus\.groovy\.grails\.commons\.ClassPropertyFetcher/import org.grails.core.util.ClassPropertyFetcher/1
 
 # org.codehaus.groovy.grails.commons.DefaultGrailsDomainClass -> org.grails.core.DefaultGrailsDomainClass
 s/import org\.codehaus\.groovy\.grails\.commons\.DefaultGrailsDomainClass/import org.grails.core.DefaultGrailsDomainClass/1
+
+# org.codehaus.groovy.grails.commons.DomainClassArtefactHandler -> org.grails.core.artefact.DomainClassArtefactHandler
+s/import org\.codehaus\.groovy\.grails\.commons\.DomainClassArtefactHandler/import org.grails.core.artefact.DomainClassArtefactHandler/1
+
+# org.codehaus.groovy.grails.commons.GrailsStringUtils -> grails.util.GrailsStringUtils
+s/import org\.codehaus\.groovy\.grails\.commons\.GrailsStringUtils/import grails.util.GrailsStringUtils/1
 
 # org.codehaus.groovy.grails.commons.GrailsApplication -> grails.core.GrailsApplication
 s/import org\.codehaus\.groovy\.grails\.commons\./import grails.core./1
@@ -31,8 +37,8 @@ s/import org\.codehaus\.groovy\.grails\.web\.servlet\./import grails.web.http./1
 # org.codehaus.groovy.grails.support.proxy.DefaultProxyHandler -> grails.core.support.proxy.DefaultProxyHandler
 s/import org\.codehaus\.groovy\.grails\.support\.proxy\./import grails.core.support.proxy./1
 
-# org.codehaus.groovy.grails.support.IncludeExcludeSupport -> # org.grails.core.utils.IncludeExcludeSupport
-s/import org\.codehaus\.groovy\.grails\.support\.IncludeExcludeSupport/import grails.core.support.IncludeExcludeSupport/1
+# org.codehaus.groovy.grails.support.IncludeExcludeSupport -> # org.grails.core.util.IncludeExcludeSupport
+s/import org\.codehaus\.groovy\.grails\.support\.IncludeExcludeSupport/import org.grails.core.util.IncludeExcludeSupport/1
 
 s/import org\.codehaus\.groovy\.grails\./import grails./1
 

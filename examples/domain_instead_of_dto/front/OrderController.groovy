@@ -2,6 +2,12 @@ package com.kakao.buy.front
 
 class OrderController {
 	private static final logger = LoggerFactory.getLogger(this)
+
+	/* will be called by BootStrap.groovy init() */
+	void registerJsonMarshallers() {
+		registerJsonMarshallers1()
+		registerJsonMarshallers2()
+	}
 	
 	@Secured(["ROLE_BUYER"])
 	def checkout() {
@@ -47,7 +53,6 @@ class OrderController {
 			}
 			json {
 				render([
-
 					channel: channel, viewType: viewType,
 					title: '주문하기',
 					payment: payment,
@@ -120,10 +125,59 @@ class OrderController {
 				pageParam.setPageInfo()
 
 				PagedResult<Payment> result = frontOrderService.getPaymentListFast(pageParam, accountId, channel)
-				checkAndRegisterMarshallers1()
 				render result.toJson('/order/list')
 			}
 		}
+	}
+	
+	void registerJsonMarshallers1() {
+		JSON.createNamedConfig('/order/list') { config ->
+			config.registerObjectMarshaller(Payment) { Payment it ->
+				[id      : it.id,
+				 payment_id : it.id,
+				 paidAt  : it.paidAt,
+				 quantity: it.orders*.quantity.sum(),
+				 orders  : it.orders,
+
+				 firstOrderItem       : it.orders.first().orderItem, // modified
+				 firstReceiverNickname: it.orders.first().receiverNickname,
+				 receiversCount       : it.orders*.receiverTalkId.unique().size(),
+				]
+			}
+			config.registerObjectMarshaller(Order) { Order it ->
+				String statusLabel = it.extraLabelOfStatus ?
+						[it.status.labelForFront, it.extraLabelOfStatus].join(' ') :
+						it.status.labelForFront
+				[id             : it.id,
+				 order_id       : it.id,
+				 status         :
+						 [id   : it.status.id,
+						  name : it.status.name(),
+						  label: statusLabel,
+						 ],
+				 quantity       : it.quantity,
+				 payAmount      : it.payAmount.toFormatString(),
+				 orderItem      : it.orderItem,
+				 orderItemOption: it.orderItemOption,
+				]
+			}
+			config.registerObjectMarshaller(OrderItem) { OrderItem it ->
+				VoucherOrderItem voi = it.instanceOf(VoucherOrderItem) ? it as VoucherOrderItem : null
+				String exchangeBrandName = voi ? voi.exchangeBrand?.name : null
+				[name         : it.name,
+				 brandName    : it.brandName ?: exchangeBrandName,
+				 imageUrl     : it.imageUrl,
+				 channelItemId: it.channelItemId,
+				]
+			}
+			config.registerObjectMarshaller(OrderItemOption) { OrderItemOption it ->
+				[itemOptionId : it.itemOptionId,
+				 optionContent: it.optionContent,
+				 quantity     : it.quantity,
+				]
+			}
+		}
+		logger.debug("registerJsonMarshallers1() initialized")
 	}
 	
 	@Secured(["ROLE_BUYER"])
@@ -167,9 +221,6 @@ class OrderController {
 								giveBack: flash.chainModel?.giveBack
 						])
 				}
-			}
-			json {
-				render JsonUtil.toDeepJson([payment: payment, giveBack: flash.chainModel?.giveBack])
 			}
 		}
 	}

@@ -62,6 +62,71 @@ class OrderController {
 	}
 	
 	@Secured(["ROLE_BUYER"])
+	def list() {
+		ViewType viewType = ViewType.of(request)
+		Channel channel = Channel.of(params['channel'] as Long, viewType)
+		Integer page = params['page'] as Integer ?: params['pageNo'] as Integer ?: 1
+		Integer size = params['size'] as Integer ?: params['pageSize'] as Integer ?: 10
+
+		int ITEMS_IN_A_PAGE = 10
+		Long accountId = buyerSecurityService.getUser()?.accountId
+
+		withFormat {
+			html {
+				switch (channel.id) {
+					case 1L:
+						String layout = 'main.gift.201505'
+						Map counts = [
+								gift: frontOrderService.countPaidPayments(accountId, Channel.GIFT),
+								pick: frontOrderService.countPaidPayments(accountId, Channel.PICK),
+						]
+						render(view: "/order/1/list", layout: layout, model: [
+								channel: channel, viewType: viewType,
+								title  : '주문내역',
+								page   : page, size: size,
+								counts : counts,
+						])
+						break
+					case 2L:
+						String layout = 'main.pick.201505'
+						Map counts = [
+								gift: frontOrderService.countPaidPayments(accountId, Channel.GIFT),
+								pick: frontOrderService.countPaidPayments(accountId, Channel.PICK),
+						]
+						render(view: "/order/2/list", layout: layout, model: [
+								channel: channel, viewType: viewType,
+								title  : '주문내역',
+								page   : page, size: size,
+								counts : counts,
+						])
+						break
+					default:
+						String layout = (channel.id == 3L ? 'main.farmer' : 'main.v2.header')
+						Map counts = [
+								this: frontOrderService.countPaidPayments(accountId, channel),
+						]
+						render(view: "/order/list", layout: layout, model: [
+								channel: channel, viewType: viewType,
+								title  : '주문내역',
+								page   : page, size: size,
+								counts : counts,
+						])
+				}
+			}
+			json {
+				/* 주문내역을 가져오는데 지연시간이 길어 ajax 방식으로 구현하고, spinner를 보여준다. */
+				PageSearchParam pageParam = new PageSearchParam(pageNo: page, pageSize: size)
+				pageParam.pageSize = size ?: ITEMS_IN_A_PAGE
+				pageParam.setPageInfo()
+
+				PagedResult<Payment> result = frontOrderService.getPaymentListFast(pageParam, accountId, channel)
+				checkAndRegisterMarshallers1()
+				render result.toJson('/order/list')
+			}
+		}
+	}
+	
+	@Secured(["ROLE_BUYER"])
 	def show() {
 		ViewType viewType = ViewType.of(request)
 		Channel channel = Channel.of(params['channel'] as Long, viewType)

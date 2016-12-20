@@ -93,7 +93,7 @@ class OrderController {
 						])
 						break
 					case 2L:
-						String layout = 'main.pick.201505'
+						String layout = 'main.theme2'
 						Map counts = [
 								theme1: frontOrderService.countPaidPayments(accountId, Channel.THEME1),
 								theme2: frontOrderService.countPaidPayments(accountId, Channel.THEME2),

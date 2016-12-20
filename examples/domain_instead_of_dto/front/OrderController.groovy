@@ -1,4 +1,4 @@
-package com.kakao.buy.front
+package org.example.front
 
 class OrderController {
 	private static final logger = LoggerFactory.getLogger(this)
@@ -9,7 +9,7 @@ class OrderController {
 		registerJsonMarshallers2()
 	}
 	
-	@Secured(["ROLE_BUYER"])
+	@Secured(["ROLE_USER"])
 	def checkout() {
 		ViewType viewType = ViewType.of(request)
 		Channel channel = Channel.of(params['channel'] as Long, viewType)
@@ -35,7 +35,7 @@ class OrderController {
 
 		withFormat {
 			html {
-				String layout = (channel.id == 3L ? 'main.farmer' : 'main.v2.header')
+				String layout = (channel.id == 3L ? 'main.theme3' : 'main.common')
 				switch (channel.id) {
 					default:
 						render(view: "/order/checkout", layout: layout, model: [
@@ -66,7 +66,7 @@ class OrderController {
 		}
 	}
 	
-	@Secured(["ROLE_BUYER"])
+	@Secured(["ROLE_USER"])
 	def list() {
 		ViewType viewType = ViewType.of(request)
 		Channel channel = Channel.of(params['channel'] as Long, viewType)
@@ -80,10 +80,10 @@ class OrderController {
 			html {
 				switch (channel.id) {
 					case 1L:
-						String layout = 'main.gift.201505'
+						String layout = 'main.theme1'
 						Map counts = [
-								gift: frontOrderService.countPaidPayments(accountId, Channel.GIFT),
-								pick: frontOrderService.countPaidPayments(accountId, Channel.PICK),
+								theme1: frontOrderService.countPaidPayments(accountId, Channel.THEME1),
+								theme2: frontOrderService.countPaidPayments(accountId, Channel.THEME2),
 						]
 						render(view: "/order/1/list", layout: layout, model: [
 								channel: channel, viewType: viewType,
@@ -95,8 +95,8 @@ class OrderController {
 					case 2L:
 						String layout = 'main.pick.201505'
 						Map counts = [
-								gift: frontOrderService.countPaidPayments(accountId, Channel.GIFT),
-								pick: frontOrderService.countPaidPayments(accountId, Channel.PICK),
+								theme1: frontOrderService.countPaidPayments(accountId, Channel.THEME1),
+								theme2: frontOrderService.countPaidPayments(accountId, Channel.THEME2),
 						]
 						render(view: "/order/2/list", layout: layout, model: [
 								channel: channel, viewType: viewType,
@@ -106,7 +106,7 @@ class OrderController {
 						])
 						break
 					default:
-						String layout = (channel.id == 3L ? 'main.farmer' : 'main.v2.header')
+						String layout = (channel.id == 3L ? 'main.theme3' : 'main.common')
 						Map counts = [
 								this: frontOrderService.countPaidPayments(accountId, channel),
 						]
@@ -180,7 +180,7 @@ class OrderController {
 		logger.debug("registerJsonMarshallers1() initialized")
 	}
 	
-	@Secured(["ROLE_BUYER"])
+	@Secured(["ROLE_USER"])
 	def show() {
 		ViewType viewType = ViewType.of(request)
 		Channel channel = Channel.of(params['channel'] as Long, viewType)
@@ -195,7 +195,7 @@ class OrderController {
 			html {
 				switch (channel.id) {
 					case 1L:
-						String layout = 'main.gift.201505'
+						String layout = 'main.theme1'
 						render(view: "/order/1/show", layout: layout, model: [
 								channel : channel, viewType: viewType,
 								title   : '주문내역 상세보기',
@@ -204,7 +204,7 @@ class OrderController {
 						])
 						break
 					case 2L:
-						String layout = 'main.gift.201505'
+						String layout = 'main.theme2'
 						render(view: "/order/2/show", layout: layout, model: [
 								channel : channel, viewType: viewType,
 								title   : '주문내역 상세보기',
@@ -213,7 +213,7 @@ class OrderController {
 						])
 						break
 					default:
-						String layout = (channel.id == 3L ? 'main.farmer' : 'main.v2.header')
+						String layout = (channel.id == 3L ? 'main.theme3' : 'main.common')
 						render(view: "/order/show", layout: layout, model: [
 								channel : channel, viewType: viewType,
 								title   : '주문내역 상세보기',

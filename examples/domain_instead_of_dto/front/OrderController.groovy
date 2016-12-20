@@ -28,7 +28,7 @@ class OrderController {
 		}
 
 		Long accountId = buyerSecurityService.getUser()?.accountId
-		BigDecimal kakaoPointBalance = billingRequestService.getKakaoPointBalance(accountId)
+		BigDecimal pointBalance = billingRequestService.getPointBalance(accountId)
 		List<ChannelPayMethod> channelPayMethods = ChannelPayMethod.findAllByChannelAndIsDisplay(channel, Boolean.TRUE).sort() {
 			it.payMethod.ordering
 		}
@@ -44,7 +44,7 @@ class OrderController {
 								payment           : payment,
 								hasShippingAddress: shippingAddressService.hasUserAddress(accountId),
 								addressList : shippingAddressService.findAddressOfUser(accountId, null),
-								kakaoPointBalance: kakaoPointBalance,
+								pointBalance: pointBalance,
 								channelPayMethods: channelPayMethods,
 								cart : cart
 						])
@@ -58,7 +58,7 @@ class OrderController {
 					payment: payment,
 					hasShippingAddress: shippingAddressService.hasUserAddress(accountId),
 					addressList : shippingAddressService.findAddressOfUser(accountId, null),
-					kakaoPointBalance: kakaoPointBalance,
+					pointBalance: pointBalance,
 					channelPayMethods: channelPayMethods,
 					cart : cart
 				] as JSON)
@@ -141,7 +141,7 @@ class OrderController {
 
 				 firstOrderItem       : it.orders.first().orderItem, // modified
 				 firstReceiverNickname: it.orders.first().receiverNickname,
-				 receiversCount       : it.orders*.receiverTalkId.unique().size(),
+				 receiversCount       : it.orders*.receiverId.unique().size(),
 				]
 			}
 			config.registerObjectMarshaller(Order) { Order it ->
